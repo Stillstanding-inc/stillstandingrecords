@@ -18,6 +18,7 @@
   .btn{display:inline-block;background:var(--navy);color:#fff;text-decoration:none;padding:.7rem 1.3rem;border-radius:8px;margin:.3rem .3rem .3rem 0;font-weight:bold}
   .btn.gold{background:var(--gold);color:var(--navy)}
   .track{background:#fff;border:1px solid var(--line);border-radius:10px;padding:1rem 1.1rem;margin:0 0 1rem}
+  .track img{width:100%;height:auto;border-radius:6px;margin-bottom:.6rem;display:block}
   .track h3{margin:.1rem 0 .5rem;color:var(--navy);font-size:1.15rem}
   .track audio{width:100%}
   footer{background:var(--navy);color:#e8e0c8;text-align:center;padding:1.4rem 1rem;font-size:.95rem}
@@ -35,7 +36,7 @@
   <h2>Press play</h2>
   <p>The label's singles, in order, under one roof. This list builds itself
   from the label's music folder: when a song is added, it shows up on this
-  page.</p>
+  page with its cover.</p>
 
   <div id="tracks"><p class="small">Loading the music…</p></div>
 
@@ -72,12 +73,17 @@
       songs.forEach(function (s) {
         var card = document.createElement("div");
         card.className = "track";
+        var img = document.createElement("img");
+        img.src = "covers/" + s.name.replace(/\.[^.]+$/, "") + ".jpg";
+        img.alt = titleOf(s.name) + " — cover";
+        img.onerror = function () { img.style.display = "none"; };
         var h = document.createElement("h3");
         h.textContent = titleOf(s.name);
         var a = document.createElement("audio");
         a.controls = true;
         a.preload = "none";
         a.src = s.download_url;
+        card.appendChild(img);
         card.appendChild(h);
         card.appendChild(a);
         box.appendChild(card);
